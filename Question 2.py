@@ -1,11 +1,9 @@
-
-
+#Importing necessary libraries
 import pandas as pd
 import zipfile
 
+#Merged all csv files into one zip folder
 zip = "temperatures.zip"
-
-
 with zipfile.ZipFile(zip, "r") as z:
     csv_files = [f for f in z.namelist() if f.endswith(".csv")]
     dfs = [pd.read_csv(z.open(f)) for f in csv_files]
@@ -25,7 +23,7 @@ data_long = data.melt(
 # Dropping missing values
 data_long = data_long.dropna(subset=["Temperature"])
 
-# Map months to Australian seasons
+# Mapping months to appropriate Australian seasons
 season_map = {
     "December": "Summer", "January": "Summer", "February": "Summer",
     "March": "Autumn", "April": "Autumn", "May": "Autumn",
@@ -46,7 +44,7 @@ print("✅ Seasonal averages saved to average_temp.txt")
 station_stats = data_long.groupby("STATION_NAME")["Temperature"].agg(["max", "min"])
 station_stats["range"] = station_stats["max"] - station_stats["min"]
 
-# Find max range value and all stations that match this max range
+# Finding desired max range
 max_range = station_stats["range"].max()
 largest_range_stations = station_stats[station_stats["range"] == max_range]
 
