@@ -1,0 +1,52 @@
+import turtle
+
+# This function draws one "side" of the shape.
+# If depth is 0, it just draws a straight line.
+# Otherwise, it splits the side into 4 smaller parts with a little "bump" in the middle.
+def draw_side(my_turtle, length, depth):
+    if depth == 0:
+        my_turtle.forward(length)
+    else:
+        # Each time we go one level deeper, the side is split into thirds
+        new_length = length / 3
+
+        # First third
+        draw_side(my_turtle, new_length, depth - 1)
+
+        # Make the bump: go left, draw a side
+        my_turtle.left(60)
+        draw_side(my_turtle, new_length, depth - 1)
+
+        # Go downwards to make the triangle shape
+        my_turtle.right(120)
+        draw_side(my_turtle, new_length, depth - 1)
+
+        # Back up again
+        my_turtle.left(60)
+        draw_side(my_turtle, new_length, depth - 1)
+
+# Main program starts here
+def main():
+    # Ask the user for input
+    sides = int(input("How many sides for the starting shape? "))
+    length = int(input("How long should each side be (pixels)? "))
+    depth = int(input("How many times to repeat the pattern (recursion depth)? "))
+
+    # Setup the turtle screen and pen
+    my_turtle = turtle.Turtle()
+    my_turtle.speed(0)   # fastest speed
+    turtle.bgcolor("white")
+
+    # The angle to turn depends on how many sides the polygon has
+    turn_angle = 360 / sides
+
+    # Draw the whole polygon
+    for i in range(sides):
+        draw_side(my_turtle, length, depth)
+        my_turtle.right(turn_angle)
+
+    turtle.done()
+
+# Run the program
+if __name__ == "__main__":
+    main()
