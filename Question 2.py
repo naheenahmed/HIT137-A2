@@ -38,7 +38,7 @@ with open("average_temp.txt", "w") as f:
     for season, temp in seasonal_avg.items():
         f.write(f"{season}: {temp:.1f}°C\n")
 
-print("✅ Seasonal averages saved to average_temp.txt")
+print("Seasonal averages saved to average_temp.txt")
 
 # Temperature Range per station
 station_stats = data_long.groupby("STATION_NAME")["Temperature"].agg(["max", "min"])
@@ -53,7 +53,7 @@ with open("largest_temp_range_station.txt", "w") as f:
     for station, row in largest_range_stations.iterrows():
         f.write(f"{station}: Range {row['range']:.1f}°C (Max: {row['max']:.1f}°C, Min: {row['min']:.1f}°C)\n")
 
-print("✅ Largest temp range station(s) saved to largest_temp_range_station.txt")
+print("Largest temp range station(s) saved to largest_temp_range_station.txt")
 
 month_cols = ["January","February","March","April","May","June",
               "July","August","September","October","November","December"]
@@ -72,4 +72,4 @@ with open("temperature_stability_stations.txt", "w") as f:
         f.write(f"Most Stable: Station {row['STATION_NAME']}: StdDev {row['StdDev']:.1f}°C\n")
     for _, row in most_variable.iterrows():
         f.write(f"Most Variable: Station {row['STATION_NAME']}: StdDev {row['StdDev']:.1f}°C\n")
-print("✅ Temperature stability results saved to temperature_stability_stations.txt")
+print("Temperature stability results saved to temperature_stability_stations.txt")
